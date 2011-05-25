@@ -1,0 +1,4 @@
+<%= render 'blogpost', :blogpost => @blogpost %>
+<%= link_to 'Edit', edit_blogpost_path(@blogpost) %>
+  | <%= link_to 'Delete', blogpost_path(@blogpost), :method => :delete %>
+  | <%= link_to 'All Posts', blogposts_path %>

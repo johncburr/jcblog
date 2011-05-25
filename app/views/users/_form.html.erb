@@ -1,0 +1,14 @@
+<%= form_for @user do |f| %>
+  <fieldset>
+    <dl>
+      <dt><%= f.label :name %></dt>
+      <dd><%= f.text_field :name %></dd>
+      <dt><%= f.label :email %></dt>
+      <dd><%= f.text_field:email %></dd>
+    </dl>
+  </fieldset>
+  <p>
+    <%= f.submit 'Save' %>
+      | <%= link_to 'All Users', users_path %>
+  </p>
+<% end %>

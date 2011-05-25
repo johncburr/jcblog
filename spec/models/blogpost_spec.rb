@@ -5,6 +5,7 @@ describe Blogpost do
   it { should validate_presence_of(:entry_text) }
   it { should validate_presence_of(:user_id) }
   it { should ensure_length_of(:entry_text).is_at_most(255)  }
-  
+
   it { should_not be_valid }
+  it { should belong_to(:user) }
 end

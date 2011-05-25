@@ -20,12 +20,11 @@ ActiveRecord::Schema.define(:version => 20110520173756) do
     t.datetime "updated_at"
   end
 
+  add_index "blogposts", ["user_id"], :name => "index_blogposts_on_user_id"
+
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
-    t.string   "username"
-    t.string   "crypt_pass"
-    t.string   "salt"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

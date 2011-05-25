@@ -1,7 +1,7 @@
 # == Schema Information
-# Schema version: 20110519140647
+# Schema version: 20110520173756
 #
-# Table name: blogps
+# Table name: blogposts
 #
 #  id         :integer         not null, primary key
 #  entry_text :string(255)
@@ -12,6 +12,7 @@
 #
 
 class Blogpost < ActiveRecord::Base
+  belongs_to :user
   validates_presence_of :title, :entry_text, :user_id
   validates_length_of :entry_text, :maximum => 255
 end

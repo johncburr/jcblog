@@ -5,6 +5,7 @@ class CreateBlogposts < ActiveRecord::Migration
       t.integer :user_id
       t.timestamps
     end
+    add_index :blogposts, :user_id
   end
 
   def self.down

@@ -11,18 +11,18 @@ describe BlogpostsController do
 
   describe "GET 'index'" do
     before {
-      @blogposts = mock('Blogposts')
-      Blogpost.stubs(:all).returns(@blogposts)
+      @user = Factory.build(:user)
+      User.stubs(:find).returns(@user)
       get :index
     }
     it { should respond_with(:success) }
     it { should render_template(:index) }
-    it { should assign_to(:blogposts).with(@blogposts) }
+    it { should assign_to(:blogposts).with(@user.blogposts) }
   end
 
   describe "GET 'show'" do
     before {
-      @blogpost = mock('Blogpost')
+      @blogpost = Factory.build(:blogpost)
     }
     context "with a valid id" do
       before {
@@ -45,13 +45,14 @@ describe BlogpostsController do
 
   describe "GET 'new'" do
     before {
-      @blogpost = mock('Blogpost')
-      Blogpost.expects(:new).returns(@blogpost)
-      get :new
+      @user_id = 2
+      get :new, :uid => @user_id
     }
     it { should respond_with(:success) }
     it { should render_template(:new) }
-    it { should assign_to(:blogpost).with(@blogpost) }
+    it "should assign :id to @blogpost.user_id" do
+      assigns[:blogpost].user_id.should == @user_id
+    end
   end
 
   describe "POST 'create'" do
