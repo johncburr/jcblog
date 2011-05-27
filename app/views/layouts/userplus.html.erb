@@ -8,7 +8,13 @@
   <%= yield :head_yield %>
 </head>
 <body>
-<%= yield :user_yield %>
-<%= yield :blogpost_yield %>
+  <div id="user_stuff">
+    <%= yield :user_yield %>
+    <%= link_to 'All Users', users_path %>
+  </div>
+  <div id="blogpost_stuff">
+    <%= link_to 'New Blog', new_blogpost_path %>
+    <%= yield :blogpost_yield %>
+  </div>
 </body>
 </html>

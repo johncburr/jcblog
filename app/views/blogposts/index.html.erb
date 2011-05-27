@@ -1,0 +1,10 @@
+<%= content_for :user_yield do %>
+  <%= render 'users/user', :user => @user %>
+<% end %>
+<%= content_for :blogpost_yield do %>
+  <% if @blogposts.length > 0 %>
+    <%= render @blogposts %>
+  <% else %>
+    <br />No Blogs Yet.
+  <% end %>
+<% end %>

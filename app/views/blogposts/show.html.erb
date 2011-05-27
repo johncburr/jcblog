@@ -1,4 +1,9 @@
-<%= render 'blogpost', :blogpost => @blogpost %>
-<%= link_to 'Edit', edit_blogpost_path(@blogpost) %>
+<%= content_for :user_yield do %>
+  <%= render @user %>
+<% end %>
+<%= content_for :blogpost_yield do %>
+  <%= render @blogpost %>
+  <%= link_to 'Edit', edit_blogpost_path(@blogpost) %>
   | <%= link_to 'Delete', blogpost_path(@blogpost), :method => :delete %>
-  | <%= link_to 'All Posts', blogposts_path %>
+  | <%= link_to 'All Blogs', blogposts_path %>
+<% end %>

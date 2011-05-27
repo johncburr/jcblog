@@ -1,6 +1,6 @@
-<% content_for :post_info %>
-  <h2>
-    Edit Entry
-  </h2>
+<%= content_for :user_yield do %>
+  <%= render @user %>
+<% end %>
+<%= content_for :blogpost_yield do %>
   <%= render 'form', :blogpost => @blogpost %>
 <% end %>

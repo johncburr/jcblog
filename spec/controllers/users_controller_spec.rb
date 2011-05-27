@@ -31,7 +31,7 @@ describe UsersController do
         get :show, :id => 1
       }
       it { should respond_with(:success) }
-      it { should render_template("layouts/userplus", :show) }
+      it { should render_template(:show) }
       it { should assign_to(:user).with(@user) }
       it { should set_session(:show_user_id).to(@user.id) }
     end

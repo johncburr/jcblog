@@ -1,7 +1,7 @@
 class BlogpostsController < ApplicationController
   layout "userplus"
   def index
-    @user = User.find(:id => session[:show_user_id])
+    @user = User.find(session[:show_user_id])
     @blogposts = @user.blogposts
   end
 
@@ -10,16 +10,18 @@ class BlogpostsController < ApplicationController
     if @blogpost.nil?
       redirect_to blogposts_path
       flash[:error] = "Invalid Post"
+    else
+      @user = @blogpost.user
     end
   end
 
   def new
-    @user = User.find(:id => session[:user_id])
+    @user = User.find(session[:show_user_id])
     @blogpost = @user.blogposts.new
   end
 
   def create
-    @user = User.find(params[:user_id])
+    @user = User.find(session[:show_user_id])
     @blogpost = @user.blogposts.new(params[:blogpost])
     if @blogpost.save
       flash[:success] = "Post Saved"
@@ -34,6 +36,8 @@ class BlogpostsController < ApplicationController
     if @blogpost.nil?
       redirect_to blogposts_path
       flash[:error] = "Invalid Post"
+    else
+      @user = @blogpost.user
     end
   end
 
@@ -62,7 +66,7 @@ class BlogpostsController < ApplicationController
         redirect_to blogposts_path
       else
         redirect_to @blogpost
-        flash[:error] = "Save Failed"
+        flash[:error] = "Delete Failed"
       end
     end
   end

@@ -11,7 +11,6 @@ class UsersController < ApplicationController
       flash[:error] = 'Invalid User'
     else
       session[:show_user_id] = @user.id
-      render :layout => "userplus", :template => "users/show"
     end
   end
 
