@@ -1,4 +1,6 @@
-<h2>
-New Blog Post
-</h2>
-<%= render 'form' %>
+<%= content_for :user_yield do %>
+  <%= render 'users/user', :user => @user %>
+<% end %>
+<%= content_for :blogpost_yield do %>
+  <%= render 'form' %>
+<% end %>

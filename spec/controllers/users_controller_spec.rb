@@ -18,6 +18,7 @@ describe UsersController do
     it { should respond_with(:success) }
     it { should render_template(:index) }
     it { should assign_to(:users).with(@users) }
+    it { should set_session(:show_user_id).to("") }
   end
 
   describe "GET 'show'" do
@@ -30,8 +31,9 @@ describe UsersController do
         get :show, :id => 1
       }
       it { should respond_with(:success) }
-      it { should render_template(:show) }
+      it { should render_template("layouts/userplus", :show) }
       it { should assign_to(:user).with(@user) }
+      it { should set_session(:show_user_id).to(@user.id) }
     end
     context "without valid id" do
       before {

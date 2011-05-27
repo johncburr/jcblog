@@ -1,8 +1,7 @@
 <%= form_for @blogpost do |f| %>
   <fieldset>
     <dl>
-      <dt><%= f.label :user_id %></dt>
-      <dd><%= f.text_field :user_id %></dd>
+      <dd><%= f.hidden_field :user_id %></dd>
       <dt><%= f.label :title %></dt>
       <dd><%= f.text_field :title %></dd>
       <dt><%= f.label :entry_text %></dt>
@@ -11,6 +10,6 @@
   </fieldset>
   <p>
     <%= f.submit 'Save' %>
-      | <%= link_to 'All Posts', blogposts_path %>
+      | <%= link_to 'All Posts', user_path(@user) %>
   </p>
 <% end %>

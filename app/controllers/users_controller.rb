@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   def index
     @users = User.all
+    session[:show_user_id] = ""
   end
 
   def show
@@ -8,6 +9,9 @@ class UsersController < ApplicationController
     if @user.nil?
       redirect_to users_path
       flash[:error] = 'Invalid User'
+    else
+      session[:show_user_id] = @user.id
+      render :layout => "userplus", :template => "users/show"
     end
   end
 

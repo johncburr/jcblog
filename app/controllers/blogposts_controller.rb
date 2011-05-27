@@ -1,6 +1,7 @@
 class BlogpostsController < ApplicationController
+  layout "userplus"
   def index
-    @user = User.find(params[:id])
+    @user = User.find(:id => session[:show_user_id])
     @blogposts = @user.blogposts
   end
 
@@ -13,11 +14,13 @@ class BlogpostsController < ApplicationController
   end
 
   def new
-    @blogpost = Blogpost.new(:user_id => params[:uid])
+    @user = User.find(:id => session[:user_id])
+    @blogpost = @user.blogposts.new
   end
 
   def create
-    @blogpost = Blogpost.new(params[:blogpost])
+    @user = User.find(params[:user_id])
+    @blogpost = @user.blogposts.new(params[:blogpost])
     if @blogpost.save
       flash[:success] = "Post Saved"
       redirect_to @blogpost
