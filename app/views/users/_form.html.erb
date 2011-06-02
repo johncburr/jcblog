@@ -1,14 +1,30 @@
 <%= form_for @user do |f| %>
+  <% if @user.errors.any? %>
+    <div class="error_messages">
+      <h2>Form is invalid</h2>
+      <ul>
+        <% for message in @user.errors.full_messages %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <fieldset>
     <dl>
       <dt><%= f.label :name %></dt>
       <dd><%= f.text_field :name %></dd>
       <dt><%= f.label :email %></dt>
-      <dd><%= f.text_field:email %></dd>
+      <dd><%= f.text_field :email %></dd>
+      <dt><%= f.label :password %></dt>
+      <dd><%= f.password_field :password %></dd>
+      <dt><%= f.label :password_confirmation %></dt>
+      <dd><%= f.password_field :password_confirmation %></dd>
     </dl>
   </fieldset>
   <p>
     <%= f.submit 'Save' %>
+    <% if there_b_users? %>
       | <%= link_to 'All Users', users_path %>
+    <% end %>
   </p>
 <% end %>

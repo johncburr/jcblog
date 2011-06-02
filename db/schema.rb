@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(:version => 20110520173756) do
 
   create_table "blogposts", :force => true do |t|
-    t.string   "entry_text"
     t.string   "title"
+    t.text     "entry_text"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -25,8 +25,13 @@ ActiveRecord::Schema.define(:version => 20110520173756) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.string   "pepper"
+    t.string   "salt"
+    t.integer  "user_type"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "users", ["email"], :name => "index_users_on_email"
 
 end

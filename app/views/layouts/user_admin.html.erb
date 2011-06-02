@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JCBlog</title>
+  <title>JCBlog - User Admin</title>
   <%= stylesheet_link_tag :all %>
   <%= javascript_include_tag :defaults %>
   <%= csrf_meta_tag %>
@@ -9,18 +9,17 @@
 </head>
 <body>
   <div class="main_nav">
-    <% if there_b_users? %>
-      <% if current_user %>
+    <%= link_to 'Home', root_path %><br />
+    <% if there_b_admins? %>
+      <% if current_user && admin? %>
         <h4>Logged In as: <%= current_user.name %></h4>
         <%= link_to 'Logout', log_out_path %>
       <% else %>
-        <%= link_to 'Login', log_in_path %>
+        Error!
       <% end %>
-    <% end %>
-    <% if !there_b_admins? %>
-      There are currently no administrators for this site.<br />
-      <%= link_to 'Sign Up', sign_up_path %>
-       as an administrator.
+    <% else %>
+      There are no administrators for this site,
+      so you are signing up as an administrator.
     <% end %>
   </div>
   <div class="contents">

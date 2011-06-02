@@ -11,13 +11,13 @@ describe BlogpostsController do
 
   describe "GET 'index'" do
     before {
-      @user = Factory.build(:user)
-      User.expects(:find).returns(@user)
+      @blogposts = mock('Blogposts')
+      Blogpost.expects(:all).returns(@blogposts)
       get :index
     }
     it { should respond_with(:success) }
-    it { should render_template("layouts/userplus", :index) }
-    it { should assign_to(:blogposts).with(@user.blogposts) }
+    it { should render_template(:index) }
+    it { should assign_to(:blogposts).with(@blogposts) }
   end
 
   describe "GET 'show'" do
@@ -26,13 +26,11 @@ describe BlogpostsController do
     }
     context "with a valid id" do
       before {
-        @user = Factory.build(:user)
-        User.expects(:find).returns(@user)
         Blogpost.expects(:find).returns(@blogpost)
         get :show, :id => 1
       }
       it { should respond_with(:success) }
-      it { should render_template("layouts/userplus", :show) }
+      it { should render_template(:show) }
       it { should assign_to(:blogpost).with(@blogpost) }
     end
     context "without a valid id" do
@@ -52,7 +50,7 @@ describe BlogpostsController do
       get :new
     }
     it { should respond_with(:success) }
-    it { should render_template("layouts/userplus", :new) }
+    it { should render_template(:new) }
   end
 
   describe "POST 'create'" do
@@ -76,7 +74,7 @@ describe BlogpostsController do
         post :create, :blogpost => {}
       }
       it { should respond_with(:success) }
-      it { should render_template("layouts/userplus", :new) }
+      it { should render_template(:new) }
     end
   end
 
@@ -92,7 +90,7 @@ describe BlogpostsController do
         get :edit, :id => 1
       }
       it { should respond_with(:success) }
-      it { should render_template("layouts/userplus", :edit) }
+      it { should render_template(:edit) }
       it { should assign_to(:blogpost).with(@blogpost) }
     end
     context "without a valid id" do
@@ -115,7 +113,7 @@ describe BlogpostsController do
       }
       context "update succeeds" do
         before {
-          @blogpost.stubs(:update_attributes).returns(true)
+          @blogpost.expects(:update_attributes).returns(true)
           put :update, :id => 1, :blogpost => {}
         }
         it { should redirect_to(@blogpost) }
@@ -123,10 +121,10 @@ describe BlogpostsController do
       end
       context "update fails" do
         before {
-          @blogpost.stubs(:update_attributes).returns(false)
+          @blogpost.expects(:update_attributes).returns(false)
           put :update, :id => 1, :blogpost => {}
         }
-        it { should render_template("layouts/userplus", :edit) }
+        it { should render_template(:edit) }
       end
     end
     context "without a valid id" do
@@ -145,7 +143,7 @@ describe BlogpostsController do
     }
     context "with a valid id" do
       before {
-        Blogpost.stubs(:find).returns(@blogpost)
+        Blogpost.expects(:find).returns(@blogpost)
       }
       context "delete succeeds" do
         before {
@@ -165,7 +163,7 @@ describe BlogpostsController do
     end
     context "without a valid id" do
       before {
-        Blogpost.stubs(:find).returns(nil)
+        Blogpost.expects(:find).returns(nil)
         delete :destroy, :id => 1
       }
       it { should redirect_to(blogposts_path) }

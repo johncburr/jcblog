@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
+  layout "user_admin"
+  before_filter :authorize if User.all.length > 0
+
   def index
     @users = User.all
-    session[:show_user_id] = ""
+    if @users == []
+      redirect_to sign_up_path
+      flash[:error] = 'There are no users'
+    end
   end
 
   def show
@@ -9,8 +15,6 @@ class UsersController < ApplicationController
     if @user.nil?
       redirect_to users_path
       flash[:error] = 'Invalid User'
-    else
-      session[:show_user_id] = @user.id
     end
   end
 
@@ -21,7 +25,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to @user
+      redirect_to blogposts_path
       flash[:success] = 'User Saved'
     else
       render :new

@@ -1,0 +1,13 @@
+<%= form_tag sessions_path do |f| %>
+  <fieldset>
+    <dl>
+      <dt><%= label_tag :email %></dt>
+      <dd><%= text_field_tag:email, params[:email] %></dd>
+      <dt><%= label_tag :password %></dt>
+      <dd><%= password_field_tag :password, params[:password] %></dd>
+    </dl>
+  </fieldset>
+  <p>
+    <%= submit_tag 'Login' %>
+  </p>
+<% end %>

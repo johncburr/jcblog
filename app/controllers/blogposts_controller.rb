@@ -1,8 +1,8 @@
 class BlogpostsController < ApplicationController
-  layout "userplus"
+  before_filter :authorize, :except => [:index, :show ]
+
   def index
-    @user = User.find(session[:show_user_id])
-    @blogposts = @user.blogposts
+    @blogposts = Blogpost.all
   end
 
   def show
@@ -16,12 +16,12 @@ class BlogpostsController < ApplicationController
   end
 
   def new
-    @user = User.find(session[:show_user_id])
+    @user = User.find(session[:user_id])
     @blogpost = @user.blogposts.new
   end
 
   def create
-    @user = User.find(session[:show_user_id])
+    @user = User.find(session[:user_id])
     @blogpost = @user.blogposts.new(params[:blogpost])
     if @blogpost.save
       flash[:success] = "Post Saved"

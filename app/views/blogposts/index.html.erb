@@ -1,10 +1,9 @@
-<%= content_for :user_yield do %>
-  <%= render 'users/user', :user => @user %>
+<% if admin? %>
+  <%= link_to 'New Blog', new_blogpost_path %>
+  | <%= link_to 'User_Admin', users_path %>
 <% end %>
-<%= content_for :blogpost_yield do %>
-  <% if @blogposts.length > 0 %>
-    <%= render @blogposts %>
-  <% else %>
-    <br />No Blogs Yet.
-  <% end %>
+<% if @blogposts.length > 0 %>
+  <%= render @blogposts %>
+<% else %>
+  <br />No Blogs Yet.
 <% end %>

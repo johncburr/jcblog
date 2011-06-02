@@ -13,6 +13,7 @@
 
 class Blogpost < ActiveRecord::Base
   belongs_to :user
-  validates_presence_of :title, :entry_text, :user_id
-  validates_length_of :entry_text, :maximum => 255
+  validates :title, :presence => true, :length => {:maximum => 255}
+  validates :entry_text, :presence => true
+  validates :user_id, :presence => true
 end

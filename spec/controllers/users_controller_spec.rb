@@ -10,15 +10,24 @@ describe UsersController do
   it { should respond_to(:destroy) }
 
   describe "GET 'index'" do
-    before {
-      @users = mock('Users')
-      User.stubs(:all).returns(@users)
-      get :index
-    }
-    it { should respond_with(:success) }
-    it { should render_template(:index) }
-    it { should assign_to(:users).with(@users) }
-    it { should set_session(:show_user_id).to("") }
+    context "when users exist" do
+      before {
+        @users = mock('Users')
+        User.expects(:all).returns(@users)
+        get :index
+      }
+      it { should respond_with(:success) }
+      it { should render_template(:index) }
+      it { should assign_to(:users).with(@users) }
+    end
+    context "when there are no users" do
+      before {
+        User.expects(:all).returns([])
+        get :index
+      }
+      it { should set_the_flash }
+      it { should redirect_to(sign_up_path) }
+    end
   end
 
   describe "GET 'show'" do
@@ -33,7 +42,6 @@ describe UsersController do
       it { should respond_with(:success) }
       it { should render_template(:show) }
       it { should assign_to(:user).with(@user) }
-      it { should set_session(:show_user_id).to(@user.id) }
     end
     context "without valid id" do
       before {
@@ -63,15 +71,15 @@ describe UsersController do
     }
     context "save succeeded" do
       before {
-        @user.stubs(:save).returns(true)
+        @user.expects(:save).returns(true)
         post :create, :id => 1
       }
-      it { should redirect_to(@user) }
+      it { should redirect_to(blogposts_path) }
       it { should set_the_flash }
     end
     context "save failed" do
       before {
-        @user.stubs(:save).returns(false)
+        @user.expects(:save).returns(false)
         post :create, :id => 1
       }
       it { should respond_with(:success) }
@@ -85,7 +93,7 @@ describe UsersController do
     }
     context "with valid id" do
       before {
-        User.stubs(:find).returns(@user)
+        User.expects(:find).returns(@user)
         get :edit, :id => 1
       }
       it { should respond_with(:success) }
@@ -94,7 +102,7 @@ describe UsersController do
     end
     context "without valid id" do
       before {
-        User.stubs(:find).returns(nil)
+        User.expects(:find).returns(nil)
         get :edit, :id => 1
       }
       it { should redirect_to(users_path) }

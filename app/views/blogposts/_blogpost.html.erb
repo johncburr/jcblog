@@ -1,6 +1,14 @@
 <h2>
   <%= link_to_unless_current(blogpost.title, blogpost) %>
 </h2>
+<h4>
+  Posted By: <%= blogpost.user.name %>
+</h4>
 <div>
+  <% if admin? %>
+    <%= link_to 'Edit', edit_blogpost_path(blogpost) %>
+    | <%= link_to 'Delete', blogpost_path(blogpost), :method => :delete %>
+    <br />
+  <% end %>
   <%= blogpost.entry_text %>
 </div>
