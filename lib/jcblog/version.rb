@@ -1,0 +1,3 @@
+module Jcblog
+  VERSION = "0.0.1"
+end
