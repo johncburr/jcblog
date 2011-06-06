@@ -1,4 +1,8 @@
-<h1>
+<h3>
 Sign Up
-</h1>
+</h3>
+<% if !there_b_admins? %>
+  There are currently no administrators for this site,
+  so you are signing up as one.
+<% end %>
 <%= render 'form' %>

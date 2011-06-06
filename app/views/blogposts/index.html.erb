@@ -1,7 +1,3 @@
-<% if admin? %>
-  <%= link_to 'New Blog', new_blogpost_path %>
-  | <%= link_to 'User_Admin', users_path %>
-<% end %>
 <% if @blogposts.length > 0 %>
   <%= render @blogposts %>
 <% else %>

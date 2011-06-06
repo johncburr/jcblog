@@ -1,18 +1,13 @@
 class BlogpostsController < ApplicationController
   before_filter :authorize, :except => [:index, :show ]
+  before_filter :find_blogpost, :except => [:index, :new, :create]
 
   def index
     @blogposts = Blogpost.all
   end
 
   def show
-    @blogpost = Blogpost.find(params[:id])
-    if @blogpost.nil?
-      redirect_to blogposts_path
-      flash[:error] = "Invalid Post"
-    else
-      @user = @blogpost.user
-    end
+    @user = @blogpost.user
   end
 
   def new
@@ -32,42 +27,34 @@ class BlogpostsController < ApplicationController
   end
 
   def edit
-    @blogpost = Blogpost.find(params[:id])
-    if @blogpost.nil?
-      redirect_to blogposts_path
-      flash[:error] = "Invalid Post"
-    else
-      @user = @blogpost.user
-    end
+    @user = @blogpost.user
   end
 
   def update
-    @blogpost = Blogpost.find(params[:id])
-    if @blogpost.nil?
-      redirect_to blogposts_path
-      flash[:error] = "Changes Not Saved"
+    if @blogpost.update_attributes(params[:blogpost])
+      flash[:success] = "Changes Saved"
+      redirect_to @blogpost
     else
-      if @blogpost.update_attributes(params[:blogpost])
-        redirect_to @blogpost
-        flash[:success] = "Changes Saved"
-      else
-        render :edit
-      end
+      render :edit
     end
   end
 
   def destroy
+    if @blogpost.delete
+      redirect_to blogposts_path
+    else
+      flash[:error] = "Delete Failed"
+      redirect_to @blogpost
+    end
+  end
+
+  private
+
+  def find_blogpost
     @blogpost = Blogpost.find(params[:id])
     if @blogpost.nil?
+      flash[:error] = "Invalid Post"
       redirect_to blogposts_path
-      flash[:error] = "Post Not Found"
-    else
-      if @blogpost.delete
-        redirect_to blogposts_path
-      else
-        redirect_to @blogpost
-        flash[:error] = "Delete Failed"
-      end
     end
   end
 end

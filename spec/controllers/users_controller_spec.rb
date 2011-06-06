@@ -9,9 +9,20 @@ describe UsersController do
   it { should respond_to(:update) }
   it { should respond_to(:destroy) }
 
+  describe "before filter" do
+    context "-- when there are admins" do
+      before {
+        @user = mock("user")
+        User.expects(:find_by_user_type).returns(@user)
+      }
+      it_should_require_admin_for_actions "/", :index, :destroy, :promote, :demote
+    end
+  end
+
   describe "GET 'index'" do
     context "when users exist" do
       before {
+        User.expects(:count).returns(1)
         @users = mock('Users')
         User.expects(:all).returns(@users)
         get :index
@@ -22,10 +33,9 @@ describe UsersController do
     end
     context "when there are no users" do
       before {
-        User.expects(:all).returns([])
+        User.expects(:count).returns(0)
         get :index
       }
-      it { should set_the_flash }
       it { should redirect_to(sign_up_path) }
     end
   end
@@ -74,6 +84,7 @@ describe UsersController do
         @user.expects(:save).returns(true)
         post :create, :id => 1
       }
+      it { should set_session(:user_id).to(@user.id) }
       it { should redirect_to(blogposts_path) }
       it { should set_the_flash }
     end
@@ -177,6 +188,74 @@ describe UsersController do
       }
       it { should redirect_to(users_path) }
       it { should set_the_flash.to(/Invalid/) }
+    end
+  end
+
+  #~ describe "promote" do
+    #~ context "with valid id" do
+      #~ before {
+        #~ @user = Factory.build(:user)
+        #~ @user.user_type = 7
+        #~ User.expects(:find).returns(@user)
+        #~ put :promote, :id => 1
+      #~ }
+      #~ context "update succeeded" do
+        #~ before {
+          #~ @user.expects(:update_params).returns(true)
+        #~ }
+        #~ it "should assign 13 to user_type" do
+          #~ @user.user_type.should == 13
+        #~ end
+        #~ it { should redirect_to(@user) }
+      #~ end
+      #~ context "update failed" do
+        #~ before {
+          #~ @user.expects(:update_params).returns(false)
+        #~ }
+        #~ it { should render_template(:show) }
+      #~ end
+    #~ end
+    #~ context "without valid id"
+      #~ before {
+        #~ User.expects(:find).returns(nil)
+        #~ put :promote, :id => 1
+      #~ }
+      #~ it { should set_the_flash }
+      #~ it { should redirect_to(:users) }
+  #~ end
+
+  describe "demote" do
+    context "with valid id" do
+      before {
+        @user = Factory.build(:user)
+        @user.user_type = 7
+        User.expects(:find).returns(@user)
+      }
+      context "update succeeded" do
+        before {
+          @user.expects(:update_params).returns(true)
+          put :demote, :id => 1
+        }
+        it "should assign 0 to user_type" do
+          @user.user_type.should == 0
+        end
+        it { should redirect_to(@user) }
+      end
+      context "update failed" do
+        before {
+          @user.expects(:update_params).returns(false)
+          put :demote, :id => 1
+        }
+        it { should render_template(:show) }
+      end
+    end
+    context "without valid id" do
+      before {
+        User.expects(:find).returns(nil)
+        put :promote, :id => 1
+      }
+      it { should set_the_flash }
+      it { should redirect_to(:users) }
     end
   end
 end

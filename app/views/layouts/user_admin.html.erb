@@ -10,16 +10,18 @@
 <body>
   <div class="main_nav">
     <%= link_to 'Home', root_path %><br />
-    <% if there_b_admins? %>
-      <% if current_user && admin? %>
-        <h4>Logged In as: <%= current_user.name %></h4>
-        <%= link_to 'Logout', log_out_path %>
-      <% else %>
-        Error!
-      <% end %>
+    <% if current_user %>
+      <h4>Logged In as: <%= current_user.name %></h4>
+      <%= link_to 'Log Out', log_out_path %>
     <% else %>
-      There are no administrators for this site,
-      so you are signing up as an administrator.
+      <%= link_to 'Sign Up', sign_up_path %>
+      <% if there_b_users? %>
+        | <%= link_to 'Log In', log_in_path %>
+      <% end %>
+    <% end %>
+    <% if !there_b_admins? %>
+      <br />
+      ***There are currently no administrators for this site.***
     <% end %>
   </div>
   <div class="contents">

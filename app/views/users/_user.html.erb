@@ -1,4 +1,13 @@
 <h2>
   <%= link_to_unless_current(user.name, user) %>
 </h2>
+<% if admin? == there_b_admins? %>
+  <% if user.user_type == 13 %>
+    <span class="highlite_red_yellow">ADMIN</span>
+    <%= link_to 'Demote User', demote_path(:id => user) %>
+  <% else %>
+    <%= link_to 'Promote User', promote_path(:id => user) %>
+  <% end %>
+  <br />
+<% end %>
 <%= user.email %>

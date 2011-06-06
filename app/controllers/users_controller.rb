@@ -1,21 +1,17 @@
 class UsersController < ApplicationController
   layout "user_admin"
-  before_filter :authorize if User.all.length > 0
+  before_filter :authorize, :except => [:show, :new, :create, :edit, :update] if :there_b_admins?
+  before_filter :find_user, :except => [:index, :new, :create] 
 
   def index
-    @users = User.all
-    if @users == []
+    if User.count != 0
+      @users = User.all
+    else
       redirect_to sign_up_path
-      flash[:error] = 'There are no users'
     end
   end
 
   def show
-    @user = User.find(params[:id])
-    if @user.nil?
-      redirect_to users_path
-      flash[:error] = 'Invalid User'
-    end
   end
 
   def new
@@ -25,48 +21,60 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
-      redirect_to blogposts_path
+      session[:user_id] = @user.id
       flash[:success] = 'User Saved'
+      redirect_to blogposts_path
     else
       render :new
     end
   end
 
   def edit
-    @user = User.find(params[:id])
-    if @user.nil?
-      redirect_to users_path
-      flash[:error] = 'Invalid User'
-    end
   end
 
   def update
-    @user = User.find(params[:id])
-    if @user.nil?
-      redirect_to users_path
-      flash[:error] = 'Invalid User'
+    if @user.update_attributes(params[:user])
+      flash[:success] = 'Changes Saved'
+      redirect_to @user
     else
-      if @user.update_attributes(params[:user])
-        redirect_to @user
-        flash[:success] = 'Changes Saved'
-      else
-        render :edit
-      end
+      render :edit
     end
   end
 
   def destroy
+    if @user.delete
+      flash[:success] = 'User Deleted'
+      redirect_to users_path
+    else
+      render :show
+    end
+  end
+  
+  def promote
+    @user.user_type = 13
+    if @user.update_attributes
+      redirect_to @user
+    else
+      render :show
+    end
+  end
+
+  def demote
+    @user.user_type = 0
+    if @user.update_attributes!(params[:user => @user])
+      redirect_to @user
+    else
+      render :show
+    end
+  end
+
+  private
+
+  def find_user
     @user = User.find(params[:id])
     if @user.nil?
-      redirect_to users_path
       flash[:error] = 'Invalid User'
-    else
-      if @user.delete
-        redirect_to users_path
-        flash[:success] = 'User Deleted'
-      else
-        render :show
-      end
+      redirect_to users_path
     end
   end
 end

@@ -9,18 +9,24 @@
 </head>
 <body>
   <div class="main_nav">
-    <% if there_b_users? %>
-      <% if current_user %>
-        <h4>Logged In as: <%= current_user.name %></h4>
-        <%= link_to 'Logout', log_out_path %>
-      <% else %>
-        <%= link_to 'Login', log_in_path %>
+    <% if current_user %>
+      <h4>Logged In as: <%= current_user.name %></h4>
+      <%= link_to 'Log Out', log_out_path %>
+    <% else %>
+      <%= link_to 'Sign Up', sign_up_path %>
+      <% if there_b_users? %>
+        | <%= link_to 'Log In', log_in_path %>
       <% end %>
     <% end %>
+    <% if there_b_users? == admin? %>
+      | <%= link_to 'User Administration', users_path %>
+    <% end %>
+    <% if admin? %>
+      | <%= link_to 'New Blog', new_blogpost_path %>
+    <% end %>
     <% if !there_b_admins? %>
-      There are currently no administrators for this site.<br />
-      <%= link_to 'Sign Up', sign_up_path %>
-       as an administrator.
+      <br />
+      ***There are currently no administrators for this site.***
     <% end %>
   </div>
   <div class="contents">

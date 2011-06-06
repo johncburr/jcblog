@@ -18,12 +18,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def there_b_users?
-    User.all.length > 0
-  end
-
   def there_b_admins?
     !User.find_by_user_type(13).nil?
+  end
+
+  def there_b_users?
+    User.count != 0
   end
 
   def current_user
