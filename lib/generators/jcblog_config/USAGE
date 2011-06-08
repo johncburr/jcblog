@@ -1,0 +1,8 @@
+Description:
+    Generates the database migration files needed by jcblog
+
+Example:
+    rails generate jcblog_config
+
+    This will create:
+        db/migrate/jcblog_config.rb

@@ -8,11 +8,8 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["John C. Burr"]
   s.email       = ["johncburr@gmail.com"]
-  s.homepage    = ""
   s.summary     = %q{A very basic blog site gem}
   s.description = %q{Intended to become an easy-yet-reasonably-robust add-on for other rails sites.}
-
-  # s.rubyforge_project = "jcblog"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {spec,features}/*`.split("\n")

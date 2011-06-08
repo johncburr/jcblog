@@ -1,5 +1,6 @@
+.gitignore
 .bundle
 db/*.sqlite3
 log/*.log
 tmp/
-pkg/
+coverage/
