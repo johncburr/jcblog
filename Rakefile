@@ -5,6 +5,6 @@ require File.expand_path('../config/application', __FILE__)
 require 'rake'
 require 'bundler'
 
-Jcblog::Application.load_tasks
+Rails.application.load_tasks
 
 Bundler::GemHelper.install_tasks

@@ -1,7 +1,9 @@
 class UsersController < ApplicationController
   layout "user_admin"
-  before_filter :authorize, :except => [:show, :new, :create, :edit, :update] if :there_b_admins?
-  before_filter :find_user, :except => [:index, :new, :create] 
+  before_filter :authorize, :except =>
+    [:show, :new, :create, :edit, :update] if :there_b_admins?
+  before_filter :find_user, :except =>
+    [:index, :new, :create]
 
   def index
     if User.count != 0
@@ -49,10 +51,10 @@ class UsersController < ApplicationController
       render :show
     end
   end
-  
+
   def promote
     @user.user_type = 13
-    if @user.update_attributes
+    if @user.update_attribute(:user_type, @user.user_type)
       redirect_to @user
     else
       render :show
@@ -61,7 +63,7 @@ class UsersController < ApplicationController
 
   def demote
     @user.user_type = 0
-    if @user.update_attributes!(params[:user => @user])
+    if @user.update_attribute(:user_type, @user.user_type)
       redirect_to @user
     else
       render :show

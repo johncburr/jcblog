@@ -8,6 +8,11 @@
   <%= yield :head_yield %>
 </head>
 <body>
+  <div class="flash_msg">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :id => "flash_#{name}" %>
+    <% end %>
+  </div>
   <div class="main_nav">
     <%= link_to 'Home', root_path %><br />
     <% if current_user %>

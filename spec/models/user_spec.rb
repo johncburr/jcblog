@@ -8,6 +8,34 @@ describe User do
   it { should validate_format_of(:email).with(/\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i) }
   it { should validate_presence_of(:password) }
   it { should_not be_valid }
+  describe "user_type test" do
+    before {
+      User.destroy(User.all)
+      @user = User.create!( :name=>"A1",
+                            :email=>"a1@b.com",
+                            :password=>"pw",
+                            :confirm_password=>"pw",
+                            :user_type=>7)
+    }
+    it "should assign a user_type of 13" do
+      @user.user_type.should == 13
+    end
+    it "should assign a user_type of 7 to second user" do
+      @user2 = User.create!( :name=>"A2",
+                            :email=>"a2@b.com",
+                            :password=>"pw",
+                            :confirm_password=>"pw",
+                            :user_type=>7)
+      @user2.user_type.should == 7
+    end
+    it "should assign a user_type of 0 to third user" do
+      @user2 = User.create!( :name=>"A3",
+                            :email=>"a3@b.com",
+                            :password=>"pw",
+                            :confirm_password=>"pw")
+      @user2.user_type.should == 0
+    end
+  end
   describe "authenticate" do
     before(:all) {
       @set_pass = "testpass"

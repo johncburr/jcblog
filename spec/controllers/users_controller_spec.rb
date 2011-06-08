@@ -191,38 +191,39 @@ describe UsersController do
     end
   end
 
-  #~ describe "promote" do
-    #~ context "with valid id" do
-      #~ before {
-        #~ @user = Factory.build(:user)
-        #~ @user.user_type = 7
-        #~ User.expects(:find).returns(@user)
-        #~ put :promote, :id => 1
-      #~ }
-      #~ context "update succeeded" do
-        #~ before {
-          #~ @user.expects(:update_params).returns(true)
-        #~ }
-        #~ it "should assign 13 to user_type" do
-          #~ @user.user_type.should == 13
-        #~ end
-        #~ it { should redirect_to(@user) }
-      #~ end
-      #~ context "update failed" do
-        #~ before {
-          #~ @user.expects(:update_params).returns(false)
-        #~ }
-        #~ it { should render_template(:show) }
-      #~ end
-    #~ end
-    #~ context "without valid id"
-      #~ before {
-        #~ User.expects(:find).returns(nil)
-        #~ put :promote, :id => 1
-      #~ }
-      #~ it { should set_the_flash }
-      #~ it { should redirect_to(:users) }
-  #~ end
+  describe "promote" do
+    context "with valid id" do
+      before {
+        @user = Factory.build(:user)
+        @user.user_type = 7
+        User.expects(:find).returns(@user)
+      }
+      context "update succeeded" do
+        before {
+          @user.expects(:update_attribute).returns(true)
+          put :promote, :id => 1
+        }
+        it "should assign 13 to user_type" do
+          @user.user_type.should == 13
+        end
+        it { should redirect_to(@user) }
+      end
+      context "update failed" do
+        before {
+          @user.expects(:update_attribute).returns(false)
+          put :promote, :id => 1
+        }
+        it { should render_template(:show) }
+      end
+    end
+    context "without valid id"
+      before {
+        User.expects(:find).returns(nil)
+        put :promote, :id => 1
+      }
+      it { should set_the_flash }
+      it { should redirect_to(:users) }
+  end
 
   describe "demote" do
     context "with valid id" do
@@ -233,7 +234,7 @@ describe UsersController do
       }
       context "update succeeded" do
         before {
-          @user.expects(:update_params).returns(true)
+          @user.expects(:update_attribute).returns(true)
           put :demote, :id => 1
         }
         it "should assign 0 to user_type" do
@@ -243,7 +244,7 @@ describe UsersController do
       end
       context "update failed" do
         before {
-          @user.expects(:update_params).returns(false)
+          @user.expects(:update_attribute).returns(false)
           put :demote, :id => 1
         }
         it { should render_template(:show) }

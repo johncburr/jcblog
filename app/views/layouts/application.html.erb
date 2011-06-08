@@ -8,6 +8,11 @@
   <%= yield :head_yield %>
 </head>
 <body>
+  <div class="flash_msg">
+    <% flash.each do |name, msg| %>
+      <%= content_tag :div, msg, :class => "flash_#{name}" %>
+    <% end %>
+  </div>
   <div class="main_nav">
     <% if current_user %>
       <h4>Logged In as: <%= current_user.name %></h4>

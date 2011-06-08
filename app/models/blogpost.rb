@@ -4,8 +4,8 @@
 # Table name: blogposts
 #
 #  id         :integer         not null, primary key
-#  entry_text :string(255)
 #  title      :string(255)
+#  entry_text :text
 #  user_id    :integer
 #  created_at :datetime
 #  updated_at :datetime

@@ -8,21 +8,22 @@
 #  email      :string(255)
 #  pepper     :string(255)
 #  salt       :string(255)
+#  user_type  :integer
 #  created_at :datetime
 #  updated_at :datetime
 #
 
 class User < ActiveRecord::Base
   attr_accessible :name, :user_type, :email, :password, :password_confirmation
-
   attr_accessor :password
+
   before_save :encrypt_password, :set_user_type
 
   has_many  :blogposts
 
-  validates :name,      :presence => true, 
+  validates :name,      :presence => true,
                         :length => {:maximum => 48}
-  validates :email,     :presence => true, 
+  validates :email,     :presence => true,
                         :uniqueness => true,
                         :format => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/i
   validates :password,  :presence => true,

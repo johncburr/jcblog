@@ -9,13 +9,13 @@ Gem::Specification.new do |s|
   s.authors     = ["John C. Burr"]
   s.email       = ["johncburr@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{A very basic blog site s.add_development_dependency}
+  s.summary     = %q{A very basic blog site gem}
   s.description = %q{Intended to become an easy-yet-reasonably-robust add-on for other rails sites.}
 
-  s.rubyforge_project = "jcblog"
+  # s.rubyforge_project = "jcblog"
 
   s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
+  s.test_files    = `git ls-files -- {spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = ["lib"]
 

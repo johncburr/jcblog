@@ -1,4 +1,4 @@
 source 'http://rubygems.org'
 
-# Specify your gem's dependencies in jcblog.gemspec
+# Gem dependencies are all specified in jcblog.gemspec
 gemspec
