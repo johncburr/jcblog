@@ -1,4 +1,4 @@
-class BlogpostsController < ApplicationController
+class BlogpostsController < JcblogController
   before_filter :authorize, :except => [:index, :show ]
   before_filter :find_blogpost, :except => [:index, :new, :create]
 

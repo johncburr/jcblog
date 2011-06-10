@@ -8,32 +8,6 @@
   <%= yield :head_yield %>
 </head>
 <body>
-  <div class="flash_msg">
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, :class => "flash_#{name}" %>
-    <% end %>
-  </div>
-  <div class="main_nav">
-    <% if current_user %>
-      <h4>Logged In as: <%= current_user.name %></h4>
-      <%= link_to 'Log Out', log_out_path %>
-    <% else %>
-      <%= link_to 'Sign Up', sign_up_path %>
-      <% if there_b_users? %>
-        | <%= link_to 'Log In', log_in_path %>
-      <% end %>
-    <% end %>
-    <% if there_b_users? == admin? %>
-      | <%= link_to 'User Administration', users_path %>
-    <% end %>
-    <% if admin? %>
-      | <%= link_to 'New Blog', new_blogpost_path %>
-    <% end %>
-    <% if !there_b_admins? %>
-      <br />
-      ***There are currently no administrators for this site.***
-    <% end %>
-  </div>
   <div class="contents">
     <%= yield %>
   </div>

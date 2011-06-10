@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < JcblogController
   layout "user_admin"
   before_filter :authorize, :except =>
     [:show, :new, :create, :edit, :update] if :there_b_admins?
@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     [:index, :new, :create]
 
   def index
-    if User.count != 0
+    if there_b_users?
       @users = User.all
     else
       redirect_to sign_up_path

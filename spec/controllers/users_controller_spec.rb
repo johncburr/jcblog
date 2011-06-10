@@ -15,7 +15,7 @@ describe UsersController do
         @user = mock("user")
         User.expects(:find_by_user_type).returns(@user)
       }
-      it_should_require_admin_for_actions "/", :index, :destroy, :promote, :demote
+      it_should_require_admin_for_actions "/blogposts", :index, :destroy, :promote, :demote
     end
   end
 
