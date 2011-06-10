@@ -1,2 +1,24 @@
-Use this README file to introduce your application and point to useful places in the API for learning more.
-Run "rake doc:app" to generate API documentation for your models, controllers, helpers, and libraries.
+JCBlog (pronounced: jacoblog)
+
+This is intended to become a ready-made blog gem that can be added to any rails site.
+
+TO DO:
+  seemless integration with site's existing user authentication?
+  clean-up URL's to display words instead of numbers
+  create a logo and possibly some other specialized graphics
+  allow user comments
+  investigate searching options
+  allow for more robust content to be uploaded to blog
+  display only summary of blog in the index
+  regular users should be able to edit their own info
+
+TO DONE:
+  blogs can be entered
+  users can sign up
+  first sign up when no admins becomes admin
+  admins can promote/demote
+  users can promote/demote when no admins
+  only admins can enter blogs
+  app is a gem
+  gem has a generator for setting up requisite tables (rails generate jcblog_config)
+  app functions properly within another app

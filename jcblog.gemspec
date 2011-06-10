@@ -29,4 +29,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'factory_girl_rails', '>= 1.0.0'
   s.add_development_dependency 'autotest', '>= 4.4.6'
   s.add_development_dependency 'rcov', '>= 0.9.9'
+  s.add_development_dependency 'metrical', '>= 0.0.5'
 end
